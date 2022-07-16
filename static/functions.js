@@ -1,0 +1,104 @@
+// SEET: Spawn Extra Enemy Timer
+function SEET() {
+  spawnEnemy();
+  game.time.events.add(game.rnd.between(20000, 60000), SEET, this);
+}
+
+function spawnEnemy() {
+
+  var enemies = [];
+  for (var enemy in ENEMYSETTINGS) {
+    enemies.push(enemy);
+  }
+  var img = game.rnd.pick(enemies);
+  var speed = game.rnd.integerInRange(ENEMYSETTINGS[img].speed[0], ENEMYSETTINGS[img].speed[1]) + MOVESPEED;
+  var newEnemy;
+  if (ENEMYSETTINGS[img].special === "zigzag") {
+    newEnemy = new ZigzagEnemy(game.width*2, game.world.centerY, speed);
+  } else if (ENEMYSETTINGS[img].special === "chase") {
+    newEnemy = new ChaseEnemy(game.width*2, game.world.centerY, speed);
+  } else if (ENEMYSETTINGS[img].special === "speed") {
+    newEnemy = new SpeedEnemy(game.width*3, game.world.centerY, speed);
+    newEnemy.y = game.rnd.between(0, game.height-newEnemy.height);
+    newEnemy.warning.y = newEnemy.y;
+  } else {
+    newEnemy = new Enemy(game.width*2, 0, speed, img);
+    newEnemy.y = game.rnd.between(0, game.height-newEnemy.height);
+  }
+
+
+}
+
+function checkCollision(object1, object2) {
+
+  var obj1X = object1.x + object1.width/2;
+  var obj1Y = object1.y + object1.height/2;
+  var obj2X = object2.x + object2.width/2;
+  var obj2Y = object2.y + object2.height/2;
+  var distance = Phaser.Math.distance(obj1X, obj1Y, obj2X, obj2Y);
+  if(distance < object1.size + object2.size)
+  {
+    return true;
+  }
+  else
+    return false;
+}
+
+///   UPDATE VARIABLES   ///
+function addFail() {
+  fails += 1;
+  if (mode[1]) {MOVESPEED -= 1;}
+  localStorage.setItem("fails", fails);
+  game.failsTEXT.setText("Fails: "+fails);
+}
+////////////////////////////
+
+///  GAMEOVER CODE  ///
+function gameOver() {
+  if (!GAMEOVER) {
+    addFail();
+  }
+  game.background.tint = 0xFF0000;
+  player.destroy();
+  game.gameOverTEXT.visible = true;
+  GAMEOVER = true;
+  if (game.score > highscore) {
+    highscore = game.score;
+    localStorage.setItem("highscore", highscore);
+    game.highscoreTEXT.setText("High score: "+highscore);
+  }
+  game.score = 0;
+  clearStuff();
+}
+//////////////////////
+
+function restart() {
+  if (window.console)
+  {
+      console.log("Restarting...");
+  }
+  GAMEOVER = false;
+  game.gameOverTEXT.visible = false;
+  game.background.tint = 0xFFFFFF;
+  player = new Player();
+  //for (let i = 0; i < 3; i++) {
+  //  spawnEnemy();
+  //}
+}
+
+function clearStuff() {
+  function clear(toclear) {
+    console.log("Clearing: ", toclear);
+    toclear.destroy();
+  }
+  game.coins.forEach(clear);
+  game.coins = [];
+  //game.enemies.forEach(clear);
+  //game.enemies = [];
+
+}
+
+function spawnCoins(spacing) {
+  game.rnd.pick(game.coinspawner.patterns)(game.width*1.2, spacing);
+  game.time.events.add(3000, spawnCoins, this);
+}
