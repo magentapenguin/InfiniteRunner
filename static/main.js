@@ -25,6 +25,8 @@ ghost:{name:"ghost", path:"assets/enemies/ghost.png", speed:[-3,0]},
 chomper:{name:"chomper", path:"assets/enemies/chomper.png", special:"zigzag", speed:[1,1]},
 zombie:{name:"zombie", path:"assets/enemies/zombie.png", special:"chase", speed:[-3,-2]},
 octopus:{name:"octopus", path:"assets/enemies/octopus.png", special:"speed", speed:[30, 30]}};
+const POWERUPSETTINGS =
+{shield:{name:"shield", path:"assets/pickups/powerup2.png", use:"shield"}};
 const MOVESPEED = 6;
 //var HUD = game.add.layer();
 //HUD.depth = 10;
