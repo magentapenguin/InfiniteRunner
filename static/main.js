@@ -33,9 +33,12 @@ const MOVESPEED = 6;
 
 //Load all of your textures and sounds
 function preload() {
-  game.load.spritesheet('player', 'assets/players/robot_blue.png', 114, 114);
+  game.load.spritesheet('player', 'assets/players/chimp.png', 114, 114);
   for (var enemy in ENEMYSETTINGS) {
     game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
+  }
+  for (var powerup in POWERUPSETTINGS) {
+    game.load.spritesheet(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
   }
   game.load.image('bg', 'assets/backgrounds/background1.png');
 
@@ -71,6 +74,8 @@ function create() {
 
   game.highscoreTEXT = game.add.bitmapText(0, game.scoreTEXT.height+game.scoreTEXT.y+10, 'font1', "Highscore: "+highscore, 30);
   game.highscoreTEXT.depth = -3;
+
+  var p = new Shield(1000, 500);
 
   //HUD.add([ game.scoreTEXT, game.failsTEXT, game.gameOverTEXT ]);
 

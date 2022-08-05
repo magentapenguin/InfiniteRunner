@@ -28,3 +28,9 @@ Player.prototype.update = function() {
     this.frame = 1;
   }
 };
+
+Player.prototype.powerup = function(powerup) {
+  if (POWERUPSETTINGS[powerup].use === "shield") {
+    this.tint = 0x88FFFF;
+  }
+};

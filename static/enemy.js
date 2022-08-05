@@ -42,6 +42,7 @@ Enemy.prototype.update = function() {
 
 
 
+
 function ZigzagEnemy(x, y, moveSpeed, size, animSpeed) {
   if (animSpeed === undefined){
     animSpeed = 1;

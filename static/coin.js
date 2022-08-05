@@ -26,6 +26,7 @@ Coin.prototype.update = function() {
   }
 };
 
+
 game.coinspawner = {}; //TODO: Choose a nickname for the coin spawner. "The Coin Spawn-a-tron" or "The Coin Spawner 3000"?
 game.coinspawner.zigzag = function(x, spacing) {
   if (spacing === undefined ){
