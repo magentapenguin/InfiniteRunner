@@ -34,8 +34,12 @@ Enemy.prototype.update = function() {
       game.score++;
     }
   }
-  if (checkCollision(this, player)) {
+  if (checkCollision(this, player) && !player.safe) {
     gameOver();
+  } else if (checkCollision(this, player) && player.safe)
+  {
+    player.powerdown("shield");
+    this.destroy();
   }
 };
 

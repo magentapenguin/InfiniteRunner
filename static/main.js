@@ -59,6 +59,7 @@ function create() {
 
   SEET();
   spawnEnemy();
+  spawnPowerups();
   game.time.events.add(30000, spawnCoins, this);
   game.gameOverTEXT = game.add.bitmapText(game.world.centerX, game.world.centerY, 'font5', "GAME OVER ( You Failed )\nTap or click to restart");
   game.gameOverTEXT.anchor.setTo(0.5, 0.5);
@@ -75,7 +76,7 @@ function create() {
   game.highscoreTEXT = game.add.bitmapText(0, game.scoreTEXT.height+game.scoreTEXT.y+10, 'font1', "Highscore: "+highscore, 30);
   game.highscoreTEXT.depth = -3;
 
-  var p = new Shield(1000, 500);
+  //var p = new Shield(1000, 500);
 
   //HUD.add([ game.scoreTEXT, game.failsTEXT, game.gameOverTEXT ]);
 

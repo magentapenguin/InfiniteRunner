@@ -102,3 +102,16 @@ function spawnCoins(spacing) {
   game.rnd.pick(game.coinspawner.patterns)(game.width*1.2, spacing);
   game.time.events.add(3000, spawnCoins, this);
 }
+function spawnPowerups() {
+  var powups = [];
+  for (var powup in POWERUPSETTINGS) {
+    powups.push(powup);
+  }
+  var img = game.rnd.pick(powups);
+  var newPowerup;
+  if (POWERUPSETTINGS[img].use === "shield") {
+    newPowerup = new Shield(game.width*2, game.world.centerY);
+  } 
+  newPowerup.y = game.rnd.between(0, game.height-newPowerup.height);
+  game.time.events.add(30000, spawnPowerups, this);
+}

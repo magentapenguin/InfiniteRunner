@@ -11,6 +11,7 @@ function Player(x, y, size) {
   Phaser.Sprite.call(this, game, x, y, 'player');
   game.add.existing(this);
   this.size = size;
+  this.safe = false;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -32,5 +33,12 @@ Player.prototype.update = function() {
 Player.prototype.powerup = function(powerup) {
   if (POWERUPSETTINGS[powerup].use === "shield") {
     this.tint = 0x88FFFF;
+    this.safe = true;
+  }
+};
+Player.prototype.powerdown = function(powerup) {
+  if (POWERUPSETTINGS[powerup].use === "shield") {
+    this.tint = 0xFFFFFF;
+    this.safe = false;
   }
 };
