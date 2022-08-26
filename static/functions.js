@@ -51,6 +51,16 @@ function addFail() {
   localStorage.setItem("fails", fails);
   game.failsTEXT.setText("Fails: "+fails);
 }
+
+function findApple() {
+  apples += 1;
+  localStorage.setItem("apples", apples);
+}
+
+function eatApple() {
+  apples -= 1;
+  localStorage.setItem("apples", apples);
+}
 ////////////////////////////
 
 ///  GAMEOVER CODE  ///
@@ -92,9 +102,7 @@ function clearStuff() {
     toclear.destroy();
   }
   game.coins.forEach(clear);
-  game.coins = [];
-  //game.enemies.forEach(clear);
-  //game.enemies = [];
+  game.enemies.forEach(clear);
 
 }
 
@@ -111,7 +119,28 @@ function spawnPowerups() {
   var newPowerup;
   if (POWERUPSETTINGS[img].use === "shield") {
     newPowerup = new Shield(game.width*2, game.world.centerY);
-  } 
+  } else if (POWERUPSETTINGS[img].use === "coinmag") {
+    newPowerup = new CoinMag(game.width*2, game.world.centerY);
+  } else if (POWERUPSETTINGS[img].use === "revive" && (game.rnd.integerInRange(1,25) === 1)) {
+    newPowerup = new Apple(game.width*2, game.world.centerY);
+  } else if (POWERUPSETTINGS[img].use === "explosion" && (game.rnd.integerInRange(1,1) === 1)) {
+    newPowerup = new Explosion(game.width*2, game.world.centerY);
+  } else {
+    game.time.events.add(20, spawnPowerups, this);
+    if (POWERUPSETTINGS[img].use !== "revive") {console.warn(`Powerup type not defined: ${img}`);}
+    return
+  }
   newPowerup.y = game.rnd.between(0, game.height-newPowerup.height);
-  game.time.events.add(30000, spawnPowerups, this);
+  game.time.events.add(game.rnd.between(10000, 15000), spawnPowerups, this);
+}
+
+function explosion(x, y, size, shake, irregular){
+  let stuff = [];
+  if(typeof size === 'undefined') {size = 40;}
+  if(typeof shake === 'undefined') {shake = true;}
+  if(typeof irregular === 'undefined') {irregular = true;}
+  if (shake) {stuff.push(new AutoScreenShake(20, size))};
+  for (let i=0;i<size;i++) {
+    stuff.push(new ExplosionParticle(x, y, "explosion", irregular))
+  }
 }

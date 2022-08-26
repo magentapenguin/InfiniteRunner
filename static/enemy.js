@@ -12,12 +12,11 @@ function Enemy(x, y, moveSpeed, img, size, animSpeed) {
     img = "mine";
   }
   Phaser.Sprite.call(this, game, x, y, img);
-  game.add.existing(this);
+  game.enemies.add(this);
   this.size = size;
   this.animations.add("change");
   this.animations.play("change", animSpeed, true);
   this.moveSpeed = moveSpeed;
-  game.enemies.push(this);
 
 }
 
@@ -27,7 +26,6 @@ Enemy.prototype.update = function() {
   this.x -= this.moveSpeed;
   if (this.x < 0-this.width - 3) {
     this.destroy();
-    game.enemies.splice(game.enemies.indexOf(this), 1);
     spawnEnemy();
     if (false) {
       MOVESPEED++;
@@ -39,6 +37,8 @@ Enemy.prototype.update = function() {
   } else if (checkCollision(this, player) && player.safe)
   {
     player.powerdown("shield");
+    explosion(this.x, this.y);
+    
     this.destroy();
   }
 };

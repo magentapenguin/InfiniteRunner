@@ -6,17 +6,22 @@ function Coin(x, y, value, size) {
     size = 40;
   }
   Phaser.Sprite.call(this, game, x, y, "coin");
-  game.add.existing(this);
+  game.coins.add(this);
   this.size = size;
+  this.basesize = size;
   this.scorevalue = value;
   this.moveSpeed = MOVESPEED;
-  game.coins.push(this);
 }
 
 Coin.prototype = Object.create(Phaser.Sprite.prototype);
 
 Coin.prototype.update = function() {
   this.x -= this.moveSpeed;
+  if (player.mag) {
+    this.size = this.basesize * 10;
+  } else {
+    this.size = this.basesize;
+  }
   if (this.x < 0-this.width - 3) {
     this.destroy();
   }
@@ -62,10 +67,10 @@ game.coinspawner.isaac = function(x, spacing) {
   let a = [[[0, 1], [1, 1], [2, 1]],[[0, 0], [2, 0]],[[0, -1], [1, -1], [2, -1]],[[0, -2], [2, -2]],[[0, -3], [2, -3]]];
   let c = [[[0, 1], [1, 1], [2, 1]],[[0, 0]],[[0, -1]],[[0, -2]],[[0, -3], [1, -3], [2, -3]]];
   let isaac = [i,s,a,a,c];
-  game.coinspawner.pattern(isaac, 50, x);
+  game.coinspawner.pattern(isaac, 50, 2, x);
 };
 
-game.coinspawner.pattern = function(pattern, spacing, x) {
+game.coinspawner.pattern = function(pattern, spacing, value, x) {
   if (x === undefined) {x=game.world.centerX-58/2;}
   pattern.forEach(function(letter) {
     for (let line in letter) {
@@ -76,7 +81,7 @@ game.coinspawner.pattern = function(pattern, spacing, x) {
         posX += x;
         posY = posY * spacing;
         posY = (game.world.centerY-58/2) - posY;
-        var coin = new Coin(posX, posY);
+        var coin = new Coin(posX, posY, value);
       }
     }
     x += 200;
@@ -84,3 +89,4 @@ game.coinspawner.pattern = function(pattern, spacing, x) {
 };
 
 game.coinspawner.patterns = [game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.isaac];
+game.coinspawner.weightedpatterns = [game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.isaac];
