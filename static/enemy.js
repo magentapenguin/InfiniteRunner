@@ -27,27 +27,31 @@ Enemy.prototype.update = function() {
   if (this.x < 0-this.width - 3) {
     this.destroy();
     spawnEnemy();
-    if (false) {
+    if (game.mode[1]) {
       MOVESPEED++;
       game.score++;
     }
   }
-  if (checkCollision(this, player) && !player.safe) {
-    gameOver();
-  } else if (checkCollision(this, player) && player.safe)
+  if (checkCollision(this, player) && player.safe > 0)
   {
     player.powerdown("shield");
     explosion(this.x, this.y);
     
     this.destroy();
   }
+  else if (checkCollision(this, player)) {
+    gameOver();
+  }
 };
 
 
 
 
-
+//curently broken
 function ZigzagEnemy(x, y, moveSpeed, size, animSpeed) {
+  console.warn("Zigzag Enemies have been disabled");
+  this.destroy();
+  return 
   if (animSpeed === undefined){
     animSpeed = 1;
   }
@@ -58,7 +62,7 @@ ZigzagEnemy.prototype = Object.create(Enemy.prototype);
 
 ZigzagEnemy.prototype.update = function() {
   Enemy.prototype.update.call(this);
-  this.y = (Math.sin(this.x * 0.007) * ((game.height / 2) - 30)) + ((game.world.centerY/2)+(this.height/2));
+  this.y = (Math.sin(this.x*0.001) * ((game.height / 2) - 30)) + ((game.world.centerY/2)+(this.height/2));
 };
 
 
@@ -78,7 +82,7 @@ ChaseEnemy.prototype.update = function() {
   if (this.y < player.y) {
     this.ySpeed += this.accel;
   } else if (this.y > player.y) {
-    this.ySpeed -= this.accel;
+    this.ySpeed -= this.accel*1.2;
   }
   if (this.ySpeed > this.maxSpeed) {
     this.ySpeed = this.maxSpeed;

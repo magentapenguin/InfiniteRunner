@@ -1,9 +1,14 @@
+const gameState = {preload: preload, create: create, update: update};
+const menuState = {preload: menuPreload, create: menuCreate, update: menuUpdate};
+
 //This first line creates our game object.
-var game = new Phaser.Game(960, 640, Phaser.AUTO, 'game', {preload: preload, create: create, update: update});
+var game = new Phaser.Game(960, 640, Phaser.AUTO, 'game', menuState);
 var gameElem = $(game.canvas);
 var player;
 var GAMEOVER = false;
-var mode = [1, false];
+//Setting one: Difficulty multiplier (2=normal)
+//Setting two: Passed enemies increase move speed
+game.mode = [10, false];
 
 var fails = localStorage.getItem("fails");
 if (fails == undefined) {
@@ -29,11 +34,12 @@ chomper:{name:"chomper", path:"assets/enemies/chomper.png", special:"zigzag", sp
 zombie:{name:"zombie", path:"assets/enemies/zombie.png", special:"chase", speed:[-3,-2]},
 octopus:{name:"octopus", path:"assets/enemies/octopus.png", special:"speed", speed:[30, 30]}};
 const POWERUPSETTINGS =
-{shield:{name:"shield", path:"assets/pickups/powerup2.png", use:"shield"},
-magnet:{name:"magnet", path:"assets/pickups/powerup1.png", use:"coinmag"},
-boom:{name:"boom", path:"assets/pickups/powerup3.png", use:"explosion"},
-apple:{name:"apple", path:"assets/pickups/powerup4.png", use:"revive"}};
-const MOVESPEED = 6;
+{shield:{name:"shield", path:"assets/pickups/powerup2.png", use:"shield", size:[58, 58]},
+magnet:{name:"magnet", path:"assets/pickups/powerup1.png", use:"coinmag", size:[58, 58]},
+boom:{name:"boom", path:"assets/pickups/powerup3.png", use:"explosion", size:[58, 58]},
+apple:{name:"apple", path:"assets/pickups/powerup4.png", use:"revive", size:[58, 66]}};
+var MOVESPEED = 6;
+const GRAVITY = 0.5;
 
 //Load all of your textures and sounds
 function preload() {
@@ -42,7 +48,7 @@ function preload() {
     game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
   }
   for (var powerup in POWERUPSETTINGS) {
-    game.load.spritesheet(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
+    game.load.image(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
   }
   game.load.image('bg', 'assets/backgrounds/background1.png');
 
@@ -54,20 +60,31 @@ function preload() {
   game.load.image("uiwarning", "assets/ui/warning.png");
   game.load.image("uiapple", "assets/ui/apple.png");
 
+  game.load.audio("pickup", "assets/soundFx/coin10.mp3");
+  game.load.audio("main", "assets/music/FranticLevel.mp3")
+  game.load.audio("explosionFx","assets/soundFx/fire.mp3");
+  game.load.audio("oops","assets/soundFx/oops.mp3");
+
+  
 }
 
 //Do all of your initial setup
 function create() {
-  game.scale.setUserScale((window.innerWidth)/960, (window.innerHeight)/640);
+  game.scale.setUserScale((window.innerWidth)/960, (window.innerHeight-40)/640);
   game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
   game.background = game.add.tileSprite(0, 0, 960, 640, "bg");
   var HUD = game.add.group();
   game.coins = game.add.group();
   game.enemies = game.add.group();
+  game.powups = game.add.group();
 
   player = new Player();
 
   game.pickupSfx = game.add.audio("pickup");
+  game.boomfx = game.add.audio("explosionFx");
+  game.failfx = game.add.audio("oops");
+  game.mainmusic=game.add.audio("main");
+  game.mainmusic.play('',0,0.5, true);
 
   SEET();
   spawnEnemy();
@@ -108,8 +125,3 @@ function update() {
   appleText.setText(apples+"x");
   effects.update();
 }
-
-$(function(){
-  const myAudio = document.getElementById("music");
-  myAudio.play();
-})

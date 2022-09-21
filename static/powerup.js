@@ -43,7 +43,7 @@ function Shield(x, y, size , moveSpeed, img) {
     img = 'shield';
   }
   Phaser.Sprite.call(this, game, x, y, img);
-  game.add.existing(this);
+  game.powups.add(this);
   this.size = size;
   this.img = img;
   this.moveSpeed = moveSpeed;
@@ -74,7 +74,7 @@ function Apple(x, y, size , moveSpeed, img) {
     img = 'apple';
   }
   Phaser.Sprite.call(this, game, x, y, img);
-  game.add.existing(this);
+  game.powups.add(this);
   this.size = size;
   this.img = img;
   this.moveSpeed = moveSpeed;
@@ -105,7 +105,7 @@ function CoinMag(x, y, size , moveSpeed, img) {
     img = 'magnet';
   }
   Phaser.Sprite.call(this, game, x, y, img);
-  game.add.existing(this);
+  game.powups.add(this);
   this.size = size;
   this.img = img;
   this.moveSpeed = moveSpeed;
@@ -128,7 +128,7 @@ function Explosion(x, y, size , moveSpeed, img) {
     img = 'boom';
   }
   Phaser.Sprite.call(this, game, x, y, img);
-  game.add.existing(this);
+  game.powups.add(this);
   this.size = size;
   this.img = img;
   this.moveSpeed = moveSpeed;
@@ -143,8 +143,8 @@ Explosion.prototype.explode = function() {
     var s = new AutoScreenShake();
     function clear(toclear) {
       console.log("Clearing: ", toclear);
-      explosion(toclear.x, toclear.y, 20, false);
-      toclear.destroy();
+      explosion(toclear.x, toclear.y, 200, false);
+      game.enemies.remove(toclear, true);
     }
     game.enemies.forEach(clear);
     SEET();

@@ -1,7 +1,7 @@
 // SEET: Spawn Extra Enemy Timer
 function SEET() {
   spawnEnemy();
-  game.time.events.add(game.rnd.between(20000, 60000), SEET, this);
+  game.time.events.add(game.rnd.between(40000/game.mode[0], 120000/game.mode[0]), SEET, this);
 }
 
 function spawnEnemy() {
@@ -47,7 +47,7 @@ function checkCollision(object1, object2) {
 ///   UPDATE VARIABLES   ///
 function addFail() {
   fails += 1;
-  if (mode[1]) {MOVESPEED -= 1;}
+  if (game.mode[1]) {MOVESPEED -= 1;}
   localStorage.setItem("fails", fails);
   game.failsTEXT.setText("Fails: "+fails);
 }
@@ -67,7 +67,10 @@ function eatApple() {
 function gameOver() {
   if (!GAMEOVER) {
     addFail();
+    game.failfx.play();
+    game.score = 0;
   }
+  clearStuff();
   game.background.tint = 0xFF0000;
   player.destroy();
   game.gameOverTEXT.visible = true;
@@ -77,8 +80,6 @@ function gameOver() {
     localStorage.setItem("highscore", highscore);
     game.highscoreTEXT.setText("High score: "+highscore);
   }
-  game.score = 0;
-  clearStuff();
 }
 //////////////////////
 
@@ -97,13 +98,8 @@ function restart() {
 }
 
 function clearStuff() {
-  function clear(toclear) {
-    console.log("Clearing: ", toclear);
-    toclear.destroy();
-  }
-  game.coins.forEach(clear);
-  game.enemies.forEach(clear);
-
+  game.coins.removeAll(true);
+  game.enemies.removeAll(true);
 }
 
 function spawnCoins(spacing) {
@@ -131,16 +127,25 @@ function spawnPowerups() {
     return
   }
   newPowerup.y = game.rnd.between(0, game.height-newPowerup.height);
-  game.time.events.add(game.rnd.between(10000, 15000), spawnPowerups, this);
+  game.time.events.add(game.rnd.between(5000*game.mode[0], 7500*game.mode[0]), spawnPowerups, this);
 }
 
-function explosion(x, y, size, shake, irregular){
+function explosion(x, y, size, shake, irregular, sound){
   let stuff = [];
   if(typeof size === 'undefined') {size = 40;}
   if(typeof shake === 'undefined') {shake = true;}
   if(typeof irregular === 'undefined') {irregular = true;}
+  if(typeof sound === 'undefined') {sound = true;}
   if (shake) {stuff.push(new AutoScreenShake(20, size))};
+  if (sound) {game.boomfx.play()};
   for (let i=0;i<size;i++) {
     stuff.push(new ExplosionParticle(x, y, "explosion", irregular))
   }
+}
+
+
+function clearAll() {
+  game.coins.removeAll(true);
+  game.enemies.removeAll(true);
+  game.powups.removeAll(true);
 }

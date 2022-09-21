@@ -17,7 +17,7 @@ Coin.prototype = Object.create(Phaser.Sprite.prototype);
 
 Coin.prototype.update = function() {
   this.x -= this.moveSpeed;
-  if (player.mag) {
+  if (player.mag > 0) {
     this.size = this.basesize * 10;
   } else {
     this.size = this.basesize;
@@ -25,8 +25,9 @@ Coin.prototype.update = function() {
   if (this.x < 0-this.width - 3) {
     this.destroy();
   }
-  if (checkCollision(this, player)) {
+  if (checkCollision(this, player) && !game.mode[1]) {
     this.destroy();
+    game.pickupSfx.play("", 0, 0.5);
     game.score += this.scorevalue;
   }
 };
