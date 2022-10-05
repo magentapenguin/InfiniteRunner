@@ -47,11 +47,7 @@ Enemy.prototype.update = function() {
 
 
 
-//curently broken
 function ZigzagEnemy(x, y, moveSpeed, size, animSpeed) {
-  console.warn("Zigzag Enemies have been disabled");
-  this.destroy();
-  return 
   if (animSpeed === undefined){
     animSpeed = 1;
   }
@@ -95,8 +91,12 @@ ChaseEnemy.prototype.update = function() {
 
 
 function SpeedEnemy(x, y, moveSpeed, size, animSpeed) {
+  console.warn("Zigzag Enemies have been disabled");
   Enemy.call(this, x, y, moveSpeed, "octopus", size, animSpeed);
   this.warning = game.add.sprite(game.width - 200, y, "uiwarning");
+  this.destroy();
+  this.warning.destroy();
+  return this
   this.warning.flashon = true;
   this.warning.flash = function() {
     this.visible = !this.visible;

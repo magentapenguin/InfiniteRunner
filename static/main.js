@@ -1,5 +1,7 @@
 const gameState = {preload: preload, create: create, update: update};
 const menuState = {preload: menuPreload, create: menuCreate, update: menuUpdate};
+const credMenuState = {preload: credMenuPreload, create: credMenuCreate, update: credMenuUpdate};
+const shopState = {preload: shopPreload, create: shopCreate, update: shopUpdate};
 
 //This first line creates our game object.
 var game = new Phaser.Game(960, 640, Phaser.AUTO, 'game', menuState);
@@ -42,31 +44,7 @@ var MOVESPEED = 6;
 const GRAVITY = 0.5;
 
 //Load all of your textures and sounds
-function preload() {
-  game.load.spritesheet('player', 'assets/players/chimp.png', 114, 114);
-  for (var enemy in ENEMYSETTINGS) {
-    game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
-  }
-  for (var powerup in POWERUPSETTINGS) {
-    game.load.image(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
-  }
-  game.load.image('bg', 'assets/backgrounds/background1.png');
-
-  game.load.bitmapFont("font5", "assets/fonts/font5.png", "assets/fonts/font5.fnt");
-  game.load.bitmapFont("font1", "assets/fonts/font1.png", "assets/fonts/font1.fnt");
-  game.load.image("coin", "assets/pickups/coin1.png");
-  game.load.image("explosion","assets/effects/laserRed01.png");
-
-  game.load.image("uiwarning", "assets/ui/warning.png");
-  game.load.image("uiapple", "assets/ui/apple.png");
-
-  game.load.audio("pickup", "assets/soundFx/coin10.mp3");
-  game.load.audio("main", "assets/music/FranticLevel.mp3")
-  game.load.audio("explosionFx","assets/soundFx/fire.mp3");
-  game.load.audio("oops","assets/soundFx/oops.mp3");
-
-  
-}
+function preload() {}
 
 //Do all of your initial setup
 function create() {
