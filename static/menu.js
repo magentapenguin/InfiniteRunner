@@ -37,6 +37,7 @@ function menuCreate() {
     game.menuBackground = game.add.tileSprite(0, 0, 960, 640, "bg");
     game.state.add("menu", menuState);
     game.state.add("credits", credMenuState);
+    game.state.add("shop", shopState);
     game.state.add("game", gameState);
     game.mainmusic=game.add.audio("mainmenu");
     game.mainmusic.play('',0,0.5, true);

@@ -3,7 +3,7 @@ import bottle, webbrowser, click
 
 @bottle.route("/")
 def index():
-    return bottle.static_file("index.html", root='./views')
+    return bottle.static_file("index.html", root='./')
 
 @bottle.route('/static/<filename>')
 def static(filename):
