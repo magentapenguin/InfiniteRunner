@@ -3,3 +3,4 @@ colors.py
 *.exe
 Mongoose.app/**
 run.bat
+__pycache__
