@@ -54,11 +54,13 @@ function addFail() {
 
 function findApple() {
   apples += 1;
+  game.appleText.visible = true;
+  game.time.events.add(10000, () => {game.appleText.visible = false;}, this);
   localStorage.setItem("apples", apples);
 }
 
-function eatApple() {
-  apples -= 1;
+function eatApple(n) {
+  apples -= n;
   localStorage.setItem("apples", apples);
 }
 ////////////////////////////

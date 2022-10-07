@@ -71,7 +71,7 @@ function menuUpdate() {
 }
 
 
-const credits = `Me
+const credits = `Phaser
 Codakid - For the tutorial
 Thanks to SketchyLogic and Juhani Junkala over at 
 opengameart.org for the music! 

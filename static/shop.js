@@ -1,7 +1,7 @@
 function shopPreload() {
     game.load.image('bg', 'assets/backgrounds/background4.png');
     game.load.spritesheet("backbtn", "assets/ui/back.png", 67, 70);
-    game.load.audio("mainmenu", "assets/music/.mp3");
+    game.load.audio("mainmenu", "assets/music/Venus.mp3");
 }
   
   //Do all of your initial setup

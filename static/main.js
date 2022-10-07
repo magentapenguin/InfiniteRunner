@@ -75,11 +75,11 @@ function create() {
 
   uiapple = game.add.sprite(game.width-64, game.height-64, "uiapple");
   uiapple.anchor.setTo(1, 1);
-  appleText = game.add.bitmapText((uiapple.x-uiapple.width/2) - 50, (uiapple.y-uiapple.height/2) +2, 'font1', "blank");
-  appleText.anchor.setTo(1, 0.5);
+  game.appleText = game.add.bitmapText((uiapple.x-uiapple.width/2) - 50, (uiapple.y-uiapple.height/2) +2, 'font1', "blank");
+  game.appleText.anchor.setTo(1, 0.5);
   HUD.add(uiapple);
   HUD.add(appleText);
-  //game.appleText.visible = false;
+  game.appleText.visible = false;
 
   game.score = 0;
   game.failsTEXT = game.add.bitmapText(0, 0, 'font1', "Fails: "+fails, 30);
@@ -100,6 +100,6 @@ function update() {
     restart();
   }
   game.scoreTEXT.setText("Score: "+game.score);
-  appleText.setText(apples+"x");
+  game.appleText.setText(apples+"x");
   effects.update();
 }
