@@ -63,7 +63,7 @@ Shield.prototype.update = function() {
   }
 };
 
-function Apple(x, y, size , moveSpeed, img) {
+function Apple(x, y, size, moveSpeed, img) {
   if (size === undefined){
     size = 20;
   }
