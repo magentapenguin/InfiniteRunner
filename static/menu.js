@@ -22,6 +22,7 @@ function menuPreload() {
   game.load.spritesheet("backbtn", "assets/ui/back.png", 67, 70);
   game.load.image("creditbtn", "assets/ui/credits.png");
   game.load.spritesheet("helpbtn", "assets/ui/help.png", 101, 111);
+  game.load.spritesheet("shopbtn", "assets/ui/shop.png", 101, 111);
 
   game.load.audio("pickup", "assets/soundFx/coin10.mp3");
   game.load.audio("main", "assets/music/FranticLevel.mp3")
@@ -55,7 +56,7 @@ function menuCreate() {
     credbtn.anchor.setTo(0.5, 0.5);
     credbtn.scale.setTo(0.65,0.65);
     credbtn.x -= credbtn.width/4;
-    var helpbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "helpbtn", () => {}, this, 1, 0);
+    var helpbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "helpbtn", () => {helpbtn.visible = false;}, this, 1, 0);
     helpbtn.anchor.setTo(1, 0.5);
     helpbtn.scale.setTo(0.65,0.65);
     helpbtn.x += startbtn.width/2;

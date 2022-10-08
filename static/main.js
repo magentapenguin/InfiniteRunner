@@ -51,7 +51,7 @@ function create() {
   game.scale.setUserScale((window.innerWidth)/960, (window.innerHeight-40)/640);
   game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
   game.background = game.add.tileSprite(0, 0, 960, 640, "bg");
-  var HUD = game.add.group();
+  game.HUD = game.add.group();
   game.coins = game.add.group();
   game.enemies = game.add.group();
   game.powups = game.add.group();
@@ -71,25 +71,27 @@ function create() {
   game.gameOverTEXT = game.add.bitmapText(game.world.centerX, game.world.centerY, 'font5', "GAME OVER ( You Failed )\nTap or click to restart");
   game.gameOverTEXT.anchor.setTo(0.5, 0.5);
   game.gameOverTEXT.visible = false;
-  HUD.add(game.gameOverTEXT);
+  game.HUD.add(game.gameOverTEXT);
 
   uiapple = game.add.sprite(game.width-64, game.height-64, "uiapple");
   uiapple.anchor.setTo(1, 1);
   game.appleText = game.add.bitmapText((uiapple.x-uiapple.width/2) - 50, (uiapple.y-uiapple.height/2) +2, 'font1', "blank");
   game.appleText.anchor.setTo(1, 0.5);
-  HUD.add(uiapple);
-  HUD.add(appleText);
+  game.HUD.add(uiapple);
+  game.HUD.add(game.appleText);
   game.appleText.visible = false;
+
+  game.shopbtn = game.add.button();
 
   game.score = 0;
   game.failsTEXT = game.add.bitmapText(0, 0, 'font1', "Fails: "+fails, 30);
-  HUD.add(game.failsTEXT);
+  game.HUD.add(game.failsTEXT);
 
   game.scoreTEXT = game.add.bitmapText(0, game.failsTEXT.height+10, 'font1', "Score: "+game.score, 30);
-  HUD.add(game.scoreTEXT);
+  game.HUD.add(game.scoreTEXT);
 
   game.highscoreTEXT = game.add.bitmapText(0, game.scoreTEXT.height+game.scoreTEXT.y+10, 'font1', "Highscore: "+highscore, 30);
-  HUD.add(game.highscoreTEXT);
+  game.HUD.add(game.highscoreTEXT);
 
 }
 
