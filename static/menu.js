@@ -1,36 +1,40 @@
 var btnclicks =0;
 var waspressed=false;
 function menuPreload() {
-    game.load.spritesheet('player', 'assets/players/chimp.png', 114, 114);
+    game.load.spritesheet('player', '/assets/players/chimp.png', 114, 114);
   for (var enemy in ENEMYSETTINGS) {
     game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
   }
   for (var powerup in POWERUPSETTINGS) {
     game.load.image(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
   }
-  game.load.image('bg', 'assets/backgrounds/background1.png');
+  game.load.image('bg', '/assets/backgrounds/background1.png');
 
-  game.load.bitmapFont("font5", "assets/fonts/font5.png", "assets/fonts/font5.fnt");
-  game.load.bitmapFont("font1", "assets/fonts/font1.png", "assets/fonts/font1.fnt");
-  game.load.image("coin", "assets/pickups/coin1.png");
-  game.load.image("explosion","assets/effects/laserRed01.png");
+  game.load.bitmapFont("font5", "/assets/fonts/font5.png", "/assets/fonts/font5.fnt");
+  game.load.bitmapFont("font6", "/assets/fonts/font6.png", "/assets/fonts/font6.fnt");
+  game.load.bitmapFont("font1", "/assets/fonts/font1.png", "/assets/fonts/font1.fnt");
+  game.load.image("coin", "/assets/pickups/coin1.png");
+  game.load.image("explosion","/assets/effects/laserRed01.png");
 
-  game.load.image("uiwarning", "assets/ui/warning.png");
-  game.load.image("uiapple", "assets/ui/apple.png");
-  game.load.spritesheet("startbtn", "assets/ui/start.png", 246, 111)
+  game.load.image("uiwarning", "/assets/ui/warning.png");
+  game.load.image("uiapple", "/assets/ui/apple.png");
+  game.load.spritesheet("startbtn", "/assets/ui/start.png", 246, 111)
   
-  game.load.spritesheet("backbtn", "assets/ui/back.png", 67, 70);
-  game.load.image("creditbtn", "assets/ui/credits.png");
-  game.load.spritesheet("helpbtn", "assets/ui/help.png", 101, 111);
-  game.load.spritesheet("shopbtn", "assets/ui/shop.png", 101, 111);
+  game.load.spritesheet("backbtn", "/assets/ui/back.png", 67, 70);
+  game.load.image("creditbtn", "/assets/ui/credits.png");
+  game.load.spritesheet("helpbtn", "/assets/ui/help.png", 101, 111);
+  game.load.spritesheet("shopbtn", "/assets/ui/shop.png", 246, 111);
 
-  game.load.audio("pickup", "assets/soundFx/coin10.mp3");
-  game.load.audio("main", "assets/music/FranticLevel.mp3")
-  game.load.audio("mainmenu", "assets/music/SubduedTheme.mp3")
-  game.load.audio("explosionFx","assets/soundFx/fire.mp3");
-  game.load.audio("oops","assets/soundFx/oops.mp3");
+  game.load.audio("pickup", "/assets/soundFx/coin10.mp3");
+  game.load.audio("applepickup", "/assets/soundFx/confirmbeep.mp3");
+  game.load.audio("main", "/assets/music/FranticLevel.mp3");
+  game.load.audio("happymain", "/assets/music/SwingingLevel.mp3");
+  game.load.audio("mainmenu", "/assets/music/SubduedTheme.mp3");
+  game.load.audio("helpmenu", "/assets/music/HappyLevel.mp3");
+  game.load.audio("explosionFx","/assets/soundFx/fire.mp3");
+  game.load.audio("oops","/assets/soundFx/oops.mp3");
 }
-
+function happymode() { game.helpbtn.visible = false; game.mode[0] = 1; game.mainmusic.stop(); game.happymode = true; game.mainmusic = game.add.audio("helpmenu"); game.mainmusic.play('', 0, 0.5, true); }
 //Do all of your initial setup
 function menuCreate() {
     game.scale.setUserScale((window.innerWidth)/960, (window.innerHeight-40)/640);
@@ -56,10 +60,12 @@ function menuCreate() {
     credbtn.anchor.setTo(0.5, 0.5);
     credbtn.scale.setTo(0.65,0.65);
     credbtn.x -= credbtn.width/4;
-    var helpbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "helpbtn", () => {helpbtn.visible = false;}, this, 1, 0);
-    helpbtn.anchor.setTo(1, 0.5);
-    helpbtn.scale.setTo(0.65,0.65);
-    helpbtn.x += startbtn.width/2;
+
+    game.helpbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "helpbtn", happymode, this, 1, 0);
+    game.helpbtn.anchor.setTo(1, 0.5);
+    game.helpbtn.scale.setTo(0.65,0.65);
+    game.helpbtn.x += startbtn.width/2;
+    if (game.happymode) {happymode()};
 }
 
 //Write all of your continuous game logic here
@@ -79,29 +85,9 @@ opengameart.org for the music!
 (From /assets/music/MusicCredits.txt)`
 
 function credMenuPreload() {
-  game.load.spritesheet('player', 'assets/players/chimp.png', 114, 114);
-  for (var enemy in ENEMYSETTINGS) {
-    game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
-  }
-  for (var powerup in POWERUPSETTINGS) {
-    game.load.image(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
-  }
-  game.load.bitmapFont("font5", "assets/fonts/font5.png", "assets/fonts/font5.fnt");
-  game.load.bitmapFont("font1", "assets/fonts/font1.png", "assets/fonts/font1.fnt");
-  game.load.image("coin", "assets/pickups/coin1.png");
-  game.load.image("explosion","assets/effects/laserRed01.png");
-
-  game.load.image("uiwarning", "assets/ui/warning.png");
-  game.load.image("uiapple", "assets/ui/apple.png");
-  game.load.spritesheet("startbtn", "assets/ui/start.png", 246, 111)
-
-  game.load.audio("pickup", "assets/soundFx/coin10.mp3");
-  game.load.audio("main", "assets/music/FranticLevel.mp3")
-  game.load.audio("explosionFx","assets/soundFx/fire.mp3");
-  game.load.audio("oops","assets/soundFx/oops.mp3");
-game.load.image('bg', 'assets/backgrounds/background4.png');
-game.load.spritesheet("backbtn", "assets/ui/back.png", 67, 70);
-game.load.audio("mainmenu", "assets/music/Map.mp3");
+game.load.image('bg', '/assets/backgrounds/background4.png');
+game.load.spritesheet("backbtn", "/assets/ui/back.png", 67, 70);
+game.load.audio("mainmenu", "/assets/music/Map.mp3");
 }
 
 //Do all of your initial setup

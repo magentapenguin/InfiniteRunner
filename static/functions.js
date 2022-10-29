@@ -53,15 +53,16 @@ function addFail() {
 }
 
 function findApple() {
-  apples += 1;
+  game.apples += 1;
   game.appleText.visible = true;
-  game.time.events.add(10000, () => {game.appleText.visible = false;}, this);
-  localStorage.setItem("apples", apples);
+  game.uiapple.visible = true;
+  game.time.events.add(10000, () => {game.appleText.visible = false; game.uiapple.visible = false;}, this);
+  localStorage.setItem("apples", game.apples);
 }
 
 function eatApple(n) {
-  apples -= n;
-  localStorage.setItem("apples", apples);
+  game.apples -= n;
+  localStorage.setItem("apples", game.apples);
 }
 ////////////////////////////
 
@@ -71,6 +72,7 @@ function gameOver() {
     addFail();
     game.failfx.play();
     game.score = 0;
+    game.shopbtn.visible = true;
   }
   clearStuff();
   game.background.tint = 0xFF0000;
@@ -91,6 +93,7 @@ function restart() {
       console.log("Restarting...");
   }
   GAMEOVER = false;
+  game.shopbtn.visible = false;
   game.gameOverTEXT.visible = false;
   game.background.tint = 0xFFFFFF;
   player = new Player();
@@ -119,9 +122,9 @@ function spawnPowerups() {
     newPowerup = new Shield(game.width*2, game.world.centerY);
   } else if (POWERUPSETTINGS[img].use === "coinmag") {
     newPowerup = new CoinMag(game.width*2, game.world.centerY);
-  } else if (POWERUPSETTINGS[img].use === "revive" && (game.rnd.integerInRange(1,25) === 1)) {
+  } else if (POWERUPSETTINGS[img].use === "revive" && (game.rnd.integerInRange(1,5) === 1)) {
     newPowerup = new Apple(game.width*2, game.world.centerY);
-  } else if (POWERUPSETTINGS[img].use === "explosion" && (game.rnd.integerInRange(1,1) === 1)) {
+  } else if (POWERUPSETTINGS[img].use === "explosion" && (game.rnd.integerInRange(1,2) === 1)) {
     newPowerup = new Explosion(game.width*2, game.world.centerY);
   } else {
     game.time.events.add(20, spawnPowerups, this);

@@ -65,7 +65,7 @@ Shield.prototype.update = function() {
 
 function Apple(x, y, size , moveSpeed, img) {
   if (size === undefined){
-    size = 20;
+    size = 30;
   }
   if (moveSpeed === undefined){
     moveSpeed = MOVESPEED;

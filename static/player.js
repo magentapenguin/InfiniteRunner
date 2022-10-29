@@ -17,7 +17,7 @@ function Player(x, y, size) {
   this.maxSpeed = 5;
   this.accel = 0.5;
   if (this.maxSpeed <= GRAVITY){
-    console.warn("The player can not fight the force of gravity!")
+    console.error("The player can not fight the force of gravity!")
   }
 }
 
@@ -50,7 +50,9 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.powerup = function(powerupimg, powerup) {
-  game.pickupSfx.play("", 0, 0.5);
+  if (!POWERUPSETTINGS[powerupimg].use === "revive") {
+    game.pickupSfx.play("", 0, 0.5);
+  }
   if (POWERUPSETTINGS[powerupimg].use === "shield") {
     this.tint = 0x88FFFF;
     this.safe++;
@@ -59,6 +61,7 @@ Player.prototype.powerup = function(powerupimg, powerup) {
     this.mag++;
     game.time.events.add(20000, function () { player.powerdown("magnet"); }, this);
   } else if (POWERUPSETTINGS[powerupimg].use === "revive") {
+    game.ApplePickupSfx.play("", 0, 0.5);
     findApple();
   } else if (POWERUPSETTINGS[powerupimg].use === "explosion") {
     powerup.explode();
