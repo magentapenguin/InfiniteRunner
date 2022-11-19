@@ -8,7 +8,7 @@ function Player(x, y, size) {
   if (size === undefined){
     size = 40;
   }
-  Phaser.Sprite.call(this, game, x, y, 'player');
+  Phaser.Sprite.call(this, game, x, y, !game.SKINS ? "player":game.SKINS[game.selectedSkin].id);
   game.add.existing(this);
   this.size = size;
   this.safe = 0;

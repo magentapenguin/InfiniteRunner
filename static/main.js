@@ -3,6 +3,8 @@ const menuState = {preload: menuPreload, create: menuCreate, update: menuUpdate}
 const credMenuState = {preload: credMenuPreload, create: credMenuCreate, update: credMenuUpdate};
 const shopState = {preload: shopPreload, create: shopCreate, update: shopUpdate};
 
+
+
 //This first line creates our game object.
 var game = new Phaser.Game(960, 640, Phaser.AUTO, 'game', menuState);
 var gameElem = $(game.canvas);
@@ -12,17 +14,13 @@ var GAMEOVER = false;
 //Setting two: Passed enemies increase move speed
 game.mode = [10, false];
 game.happymode = false;
-localStorage.getItem("skins").split(",");
 
 var fails = localStorage.getItem("fails");
 if (fails == undefined) {
   fails = "0";
 }
-var skins = localStorage.getItem("skins");
-if (skins == undefined) {
-  skins = "chimp";
-}
-skins = skins.split(",")
+game.fails = parseInt(fails);
+
 var highscore = localStorage.getItem("highscore");
 if (highscore == undefined) {
   highscore = "0";
@@ -50,6 +48,9 @@ apple:{name:"apple", path:"/assets/pickups/powerup4.png", use:"revive", size:[58
 var MOVESPEED = 6;
 const GRAVITY = 0.5;
 
+onload();
+
+
 //Load all of your textures and sounds
 function preload() {game.load.image('bg', '/assets/backgrounds/background1.png');}
 
@@ -61,9 +62,10 @@ function create() {
   game.coins = game.add.group();
   game.enemies = game.add.group();
   game.powups = game.add.group();
-  game.HUD = game.add.group();
 
   player = new Player();
+  
+  game.HUD = game.add.group();
 
   game.pickupSfx = game.add.audio("pickup");
   game.ApplePickupSfx = game.add.audio("applepickup");
@@ -94,11 +96,11 @@ function create() {
   game.appleText.visible = false;
   game.uiapple.visible = false;
 
-  game.shopbtn = game.add.button(game.world.centerX, game.world.centerY+game.gameOverTEXT.height, "shopbtn", () => { game.mainmusic.stop(); game.state.start("shop"); }, this, 1, 0);
+  game.shopbtn = game.add.button(game.world.centerX, game.world.centerY+game.gameOverTEXT.height, "shopbtn", () => { game.mainmusic.stop(); game.isFromMenu = false; game.state.start("shop"); }, this, 1, 0);
   game.shopbtn.anchor.setTo(0.5, 0);
   game.shopbtn.visible = false;
 
-  game.failsTEXT = game.add.bitmapText(0, 0, 'font1', "Fails: "+fails, 30);
+  game.failsTEXT = game.add.bitmapText(0, 0, 'font1', "Fails: "+game.fails, 30);
   game.HUD.add(game.failsTEXT);
 
   game.scoreTEXT = game.add.bitmapText(0, game.failsTEXT.height+10, 'font1', "Score: "+game.score, 30);

@@ -1,7 +1,8 @@
 var btnclicks =0;
 var waspressed=false;
 function menuPreload() {
-    game.load.spritesheet('player', '/assets/players/chimp.png', 114, 114);
+  game.load.spritesheet('player', '/assets/players/chimp.png', 114, 114);
+  game.load.spritesheet('devskin', '/assets/players/robot_dev.png', 114, 114);
   for (var enemy in ENEMYSETTINGS) {
     game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
   }
@@ -18,6 +19,7 @@ function menuPreload() {
 
   game.load.image("uiwarning", "/assets/ui/warning.png");
   game.load.image("uiapple", "/assets/ui/apple.png");
+  game.load.image("uilock", "/assets/ui/lock.png");
   game.load.spritesheet("startbtn", "/assets/ui/start.png", 246, 111)
   
   game.load.spritesheet("backbtn", "/assets/ui/back.png", 67, 70);
@@ -54,18 +56,20 @@ function menuCreate() {
     game.musictxt.anchor.setTo(0.5, 0);
     game.musictxt.visible = game.device.needsTouchUnlock();
 
-    var startbtn = game.add.button(game.world.centerX, game.world.centerY, "startbtn", () => { game.mainmusic.stop(); game.state.start("game"); }, this, 1, 0, 2, 0);
+    var startbtn = game.add.button(game.world.centerX, game.world.centerY-50, "startbtn", () => { game.mainmusic.stop(); game.state.start("game"); }, this, 1, 0, 2, 0);
     startbtn.anchor.setTo(0.5, 0.5);
-    var credbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "creditbtn", () => { game.mainmusic.stop(); game.state.start("credits"); }, this);
+    var credbtn = game.add.button(game.world.centerX, startbtn.y+startbtn.height-10, "creditbtn", () => { game.mainmusic.stop(); game.state.start("credits"); }, this);
     credbtn.anchor.setTo(0.5, 0.5);
     credbtn.scale.setTo(0.65,0.65);
     credbtn.x -= credbtn.width/4;
 
-    game.helpbtn = game.add.button(game.world.centerX, game.world.centerY+startbtn.height-10, "helpbtn", happymode, this, 1, 0);
+    game.helpbtn = game.add.button(game.world.centerX, startbtn.y+startbtn.height-10, "helpbtn", happymode, this, 1, 0);
     game.helpbtn.anchor.setTo(1, 0.5);
     game.helpbtn.scale.setTo(0.65,0.65);
     game.helpbtn.x += startbtn.width/2;
     if (game.happymode) {happymode()};
+    var shopbtn = game.add.button(game.world.centerX, credbtn.y+credbtn.height/1.5, "shopbtn", () => { game.mainmusic.stop(); game.isFromMenu = true; game.state.start("shop"); }, this, 1, 0, 1, 0);
+    shopbtn.anchor.setTo(0.5, 0);
 }
 
 //Write all of your continuous game logic here
@@ -78,7 +82,8 @@ function menuUpdate() {
 }
 
 
-const credits = `Phaser
+const credits = `Me
+Phaser - For the 
 Codakid - For the tutorial
 Thanks to SketchyLogic and Juhani Junkala over at 
 opengameart.org for the music! 
@@ -105,7 +110,7 @@ function credMenuCreate() {
   menutxt.anchor.setTo(0.5, 0.5);
 
   var backbtn = game.add.button(game.world.centerX/15, game.world.centerY/14, "backbtn", () => { game.mainmusic.stop(); game.state.start("menu"); }, this, 1, 0, 2, 0);
-  var credtxt = [{y:game.world.centerY,height:0.1}]
+  var credtxt = [{y:game.world.centerY-50,height:0.1}]
   for (var line in credits.split("\n")) {
     let linetxt = game.add.bitmapText(game.world.centerX, (credtxt[credtxt.length - 1].y+(credtxt[credtxt.length - 1].height))+20, 'font1', credits.split("\n")[line], 20);
     linetxt.anchor.setTo(0.5, 0.5);

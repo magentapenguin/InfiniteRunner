@@ -44,12 +44,14 @@ function checkCollision(object1, object2) {
     return false;
 }
 
+
+
 ///   UPDATE VARIABLES   ///
 function addFail() {
-  fails += 1;
+  game.fails += 1;
   if (game.mode[1]) {MOVESPEED -= 1;}
-  localStorage.setItem("fails", fails);
-  game.failsTEXT.setText("Fails: "+fails);
+  localStorage.setItem("fails", game.fails);
+  game.failsTEXT.setText("Fails: "+game.fails);
 }
 
 function findApple() {
@@ -64,6 +66,16 @@ function eatApple(n) {
   game.apples -= n;
   localStorage.setItem("apples", game.apples);
 }
+
+function updateSkins() {
+  let skins = [];
+  game.SKINS.keys().forEach(element => {
+    if (game.SKINS[element].purchased) {
+      skins.push(element);
+    }
+  });
+  localStorage.setItem("skins", skins.toString());
+}
 ////////////////////////////
 
 ///  GAMEOVER CODE  ///
@@ -71,7 +83,6 @@ function gameOver() {
   if (!GAMEOVER) {
     addFail();
     game.failfx.play();
-    game.score = 0;
     game.shopbtn.visible = true;
   }
   clearStuff();
@@ -84,6 +95,8 @@ function gameOver() {
     localStorage.setItem("highscore", highscore);
     game.highscoreTEXT.setText("High score: "+highscore);
   }
+  
+  game.score = 0;
 }
 //////////////////////
 

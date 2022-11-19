@@ -1,36 +1,6 @@
-/*function Shield(x, y) {
-  console.log("does this even work?");
-  //Run the sprite
-  Phaser.Sprite.call(this, game, x, y, "shield");
-  console.log("this is code");
-  //Add shield to game
-  game.add.existing(this);
+/*== FUN FACT ==
 
-  //Set the size
-  this.size = 30;
-  console.log("this has worked to line 11");
-  //Set the anchor point
-  this.anchor.setTo(0.5, 0.5);
-
-}
-Shield.prototype = Object.create(Phaser.Sprite.prototype);
-
-Shield.prototype.update = function() {
-console.log("this is functioning at line 19");
-  //Move the shield
-  this.x -= 4;
-
-  //Collide with the player
-  if(checkCollision(this, player))
-  {
-    console.log("i has collided with player");
-    //Run the player's shield function
-    player.powerup("shield");
-    //Destroy this powerup
-    this.destroy();
-  }
-
-};*/
+The Apple was orignaly going to be a revive powerup which could be*/
 
 function Shield(x, y, size , moveSpeed, img) {
   if (size === undefined){
@@ -140,7 +110,7 @@ Explosion.prototype = Object.create(Phaser.Sprite.prototype);
 Explosion.prototype.update = Shield.prototype.update;
 
 Explosion.prototype.explode = function() {
-    var s = new AutoScreenShake();
+    let s = new AutoScreenShake();
     function clear(toclear) {
       console.log("Clearing: ", toclear);
       explosion(toclear.x, toclear.y, 200, false);
