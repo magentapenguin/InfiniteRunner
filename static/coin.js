@@ -25,7 +25,7 @@ Coin.prototype.update = function() {
   if (this.x < 0-this.width - 3) {
     this.destroy();
   }
-  if (checkCollision(this, player) && !game.mode[1]) {
+  if (checkCollision(this, player) && !game.mode[1] && player.visible) {
     this.destroy();
     game.pickupSfx.play("", 0, 0.5);
     game.score += this.scorevalue;

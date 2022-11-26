@@ -1,7 +1,8 @@
-/*== FUN FACT ==
 
-The Apple was orignaly going to be a revive powerup which could be*/
-
+//////////////////////
+////// FUN FACT //////
+// The Apple was orignaly going to be a revive powerup which could be used to revive at the gameover screen //
+//////////////////////
 function Shield(x, y, size , moveSpeed, img) {
   if (size === undefined){
     size = 30;
@@ -27,7 +28,7 @@ Shield.prototype.update = function() {
   if (this.x < 0 - this.width - 3) {
     this.destroy();
   }
-  if (checkCollision(this, player)) {
+  if (checkCollision(this, player) && player.visible) {
     this.destroy();
     player.powerup(this.img, this);
   }
@@ -58,7 +59,7 @@ Apple.prototype.update = function() {
   if (this.x < 0 - this.width - 3) {
     this.destroy();
   }
-  if (checkCollision(this, player)) {
+  if (checkCollision(this, player) && player.visible) {
     this.destroy();
     player.powerup(this.img);
   }

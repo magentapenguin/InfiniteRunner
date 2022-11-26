@@ -27,7 +27,7 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 
 Player.prototype.update = function() {
   
-  if (!game.input.activePointer.isDown) {
+  if (!game.input.activePointer.isDown ) {
     this.ySpeed += GRAVITY;
     this.frame = 1;
   } else {
@@ -39,7 +39,9 @@ Player.prototype.update = function() {
   } else if (this.ySpeed < this.maxSpeed *-1) {
     this.ySpeed = this.maxSpeed*-1;
   }
-  this.y += this.ySpeed;
+  if (this.alive) {
+    this.y += this.ySpeed;
+  }
   if (this.y > game.height-(this.height+30)){
     this.y -= 3;
     this.ySpeed = 0;

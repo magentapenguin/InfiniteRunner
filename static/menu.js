@@ -1,13 +1,14 @@
 var btnclicks =0;
 var waspressed=false;
 function menuPreload() {
-  game.load.spritesheet('player', '/assets/players/chimp.png', 114, 114);
-  game.load.spritesheet('devskin', '/assets/players/robot_dev.png', 114, 114);
   for (var enemy in ENEMYSETTINGS) {
     game.load.spritesheet(enemy, ENEMYSETTINGS[enemy].path, 114, 114);
   }
   for (var powerup in POWERUPSETTINGS) {
     game.load.image(powerup, POWERUPSETTINGS[powerup].path, 114, 114);
+  }
+  for (var skin in game.SKINS) {
+    game.load.spritesheet(game.SKINS[skin].id, game.SKINS[skin].path, 114, 114);
   }
   game.load.image('bg', '/assets/backgrounds/background1.png');
 

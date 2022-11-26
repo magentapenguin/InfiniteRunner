@@ -1,6 +1,8 @@
 var SKINS =
 {chimp:{name:"Basic Skin", id:"player", path:"/assets/players/chimp.png", purchased:false, price:0, show:true},
-dev:{name:"Dev Skin", id:"devskin", path:"/assets/players/robot_dev.png", purchased:true, price:-1, show:false}};
+dev:{name:"Dev Skin", id:"devskin", path:"/assets/players/robot_dev.png", purchased:true, price:-1, show:false},
+apple:{name:"Apple", id:"playerapple", path:"/assets/players/apple.png", purchased:false, price:100, show:true},
+quink:{name:"The Quink Horse", id:"quinky", path:"/assets/players/quink.png", purchased:true, price:-1, show:false}};
 
 
 
@@ -20,7 +22,7 @@ skins.forEach((element) => {
 
 function onload() {
   game.SKINS = SKINS;
-  game.selectedSkin = "chimp";
+  game.selectedSkin = sessionStorage.getItem("selectedSkin") ?? "chimp";
   game.isFromMenu = false;
 }
 
@@ -53,7 +55,9 @@ function shopCreate() {
   }
   
   var basic = new Skin(130, 140, "chimp");
-  var robot_dev = new Skin(130, 240, "dev");
+  var robot_dev = new Skin(130, 250, "dev");
+  var apple = new Skin(130, 360, "apple");
+  var q = new Skin(430, 140, "quink");
   var menutxt = game.add.bitmapText(game.world.centerX, game.world.centerY/6, 'font5', "Apple Shop", 30);
   menutxt.anchor.setTo(0.5, 0.5);
   
@@ -113,7 +117,7 @@ Skin.prototype.onClick = function() {
     updateSelSkins();
   } else {
     if (game.apples>=this.skindata.price) {
-      game.apples -= this.skindata.price;
+      eatApples(this.skindata.price);
       game.SKINS[this.skinid].purchased = true;
       this.skindata.purchased = true;
       game.selectedSkin = this.skinid;
@@ -138,14 +142,17 @@ Skin.prototype.updateSel = function(isSel) {
 
 function updateSelSkins() {
   game.Skins.forEach((skin) => {skin.updateSel(skin.skinid == game.selectedSkin)})
+  sessionStorage.setItem("selectedSkin", game.selectedSkin);
 }
 
 function updatePricedata() {
   this.visible = true;
   this.nametxt.visible = true;
-  
+  this.tint = 0xFFFFFF;
+  if (this.lockicon) {this.lockicon.destroy()}
   this.lockicon = game.add.sprite(this.x + this.width / 2, this.y + this.height / 2, "uilock");
   this.lockicon.visible = !this.skindata.purchased
+  if (this.pricetxt) {this.pricetxt.destroy()}
   this.pricetxt = game.add.bitmapText(this.x + this.width, this.nametxt.y + this.nametxt.height + 10, "font6", "PURCHASED", 25);
   if (!this.skindata.purchased) {
     this.pricetxt.setText(this.price);

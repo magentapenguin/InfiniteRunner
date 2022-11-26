@@ -12,7 +12,7 @@ var player;
 var GAMEOVER = false;
 //Setting one: Difficulty multiplier (2=normal)
 //Setting two: Passed enemies increase move speed
-game.mode = [10, false];
+game.mode = [2, false];
 game.happymode = false;
 
 var fails = localStorage.getItem("fails");

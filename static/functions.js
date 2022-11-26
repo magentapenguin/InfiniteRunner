@@ -56,20 +56,21 @@ function addFail() {
 
 function findApple() {
   game.apples += 1;
+  if (game.selectedSkin == "quink") {game.apples += 1;}
   game.appleText.visible = true;
   game.uiapple.visible = true;
-  game.time.events.add(10000, () => {game.appleText.visible = false; game.uiapple.visible = false;}, this);
+  game.time.events.add(5000, () => {game.appleText.visible = false; game.uiapple.visible = false;}, this);
   localStorage.setItem("apples", game.apples);
 }
 
-function eatApple(n) {
+function eatApples(n) {
   game.apples -= n;
   localStorage.setItem("apples", game.apples);
 }
 
 function updateSkins() {
   let skins = [];
-  game.SKINS.keys().forEach(element => {
+  Object.keys(game.SKINS).forEach(element => {
     if (game.SKINS[element].purchased) {
       skins.push(element);
     }
@@ -87,7 +88,7 @@ function gameOver() {
   }
   clearStuff();
   game.background.tint = 0xFF0000;
-  player.destroy();
+  player.kill();
   game.gameOverTEXT.visible = true;
   GAMEOVER = true;
   if (game.score > highscore) {
@@ -109,7 +110,7 @@ function restart() {
   game.shopbtn.visible = false;
   game.gameOverTEXT.visible = false;
   game.background.tint = 0xFFFFFF;
-  player = new Player();
+  player.revive();
   //for (let i = 0; i < 3; i++) {
   //  spawnEnemy();
   //}
@@ -122,7 +123,7 @@ function clearStuff() {
 
 function spawnCoins(spacing) {
   game.rnd.pick(game.coinspawner.patterns)(game.width*1.2, spacing);
-  game.time.events.add(3000, spawnCoins, this);
+  game.time.events.add(3000*game.mode[0], spawnCoins, this);
 }
 function spawnPowerups() {
   var powups = [];
