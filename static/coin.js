@@ -70,6 +70,14 @@ game.coinspawner.isaac = function(x, spacing) {
   let isaac = [i,s,a,a,c];
   game.coinspawner.pattern(isaac, 50, 2, x);
 };
+game.coinspawner.smile = function(x, spacing) {
+  let smile = [[[[1, -2], [2, -2], [3, -2]], [[0, -1], [4, -1]], [], [[1, 1], [3, 1]], [[1, 2], [3, 2]]]];
+  game.coinspawner.pattern(smile, 50, 1, x);
+}
+game.coinspawner.heart = function (x, spacing) {
+  let heart = [[[[2, -2]], [[1, -1], [2, -1], [3, -1]], [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]], [[1, 2], [3, 2]]]];
+  game.coinspawner.pattern(heart, 50, 1);
+}
 
 game.coinspawner.pattern = function(pattern, spacing, value, x) {
   if (x === undefined) {x=game.world.centerX-58/2;}

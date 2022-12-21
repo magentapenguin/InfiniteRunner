@@ -106,6 +106,7 @@ function SpeedEnemy(x, y, moveSpeed, size, animSpeed) {
     game.background.tint = temp;
   };
   this.warning.flash();
+  game.time.events.add(3000, this.warning.destroy, this);
 }
 
 SpeedEnemy.prototype = Object.create(Enemy.prototype);
