@@ -76,7 +76,11 @@ game.coinspawner.smile = function(x, spacing) {
 }
 game.coinspawner.heart = function (x, spacing) {
   let heart = [[[[2, -2]], [[1, -1], [2, -1], [3, -1]], [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]], [[1, 2], [3, 2]]]];
-  game.coinspawner.pattern(heart, 50, 1);
+  game.coinspawner.pattern(heart, 50, 1,x);
+}
+
+game.coinspawner.hi = function(x, spacing){
+  game.coinspawner.pattern([[[[0, 0], [1, 0], [2, 0]], [[2, 1]], [[2, 2]], [[2, 3]], [[0, 4], [1, 4], [2, 4]]], [[[0, 0], [1, 0], [2, 0]], [[1, 1]], [[1, 2]], [[1, 3]], [[0, 4], [1, 4], [2, 4]]]], 50, 1,x)
 }
 
 game.coinspawner.pattern = function(pattern, spacing, value, x) {
@@ -97,5 +101,5 @@ game.coinspawner.pattern = function(pattern, spacing, value, x) {
   });
 };
 
-game.coinspawner.patterns = [game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.isaac];
-game.coinspawner.weightedpatterns = [game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.isaac];
+game.coinspawner.patterns = [game.coinspawner.hi, game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.isaac];
+game.coinspawner.weightedpatterns = [game.coinspawner.hi, game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.zigzag, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.diamond, game.coinspawner.isaac];

@@ -16,7 +16,7 @@ app.icon = "./assets/pickups/coin2.png"
 ERROR=True
 
 def imagetolist(im: PIL.Image.Image):
-    """Convert an image to 2D list containing the image colors"""
+    """Convert an image to list containing the image colors"""
     out = []
     data = list(im.getdata())
     for i in range(im.height):
@@ -70,7 +70,6 @@ def make():
 game.coinspawner.pattern({name}, {spacing_inp.value}, {value_inp.value});"""
         output.show()
         output.value = out
-
 
 
 select_img = ui.PushButton(app, command=select_img, text="Select Image")
